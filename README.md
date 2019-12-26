@@ -1,3 +1,3 @@
-#Loyalty Forum API
+# Loyalty Forum API
 
 Backend webservice for custom forum application
