@@ -38,7 +38,8 @@ public class MessageController {
     @CrossOrigin
     @PostMapping
     public MessageDto postMessage(@RequestBody MessageDto messageDto) {
-        Message message = new Message(messageDto.getUserName(), LocalDateTime.now(), messageDto.getMessage());
+        Message message = new Message(messageDto.getUsername(), LocalDateTime.now(), messageDto.getMessage());
+        log.info("New message {}, From: {}", message.getMessage(), message.getUsername());
         return modelMapper.map(messageService.save(message), MessageDto.class);
     }
 }

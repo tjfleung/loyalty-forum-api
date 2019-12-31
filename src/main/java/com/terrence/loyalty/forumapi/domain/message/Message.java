@@ -16,7 +16,7 @@ public class Message {
     private long id;
 
     @NotNull
-    private String userName;
+    private String username;
 
     @NotNull
     private LocalDateTime postedDate;
@@ -26,8 +26,8 @@ public class Message {
 
     protected Message() {}
 
-    public Message(@NotNull String userName, @NotNull LocalDateTime postedDate, @NotNull String message) {
-        this.userName = userName;
+    public Message(@NotNull String username, @NotNull LocalDateTime postedDate, @NotNull String message) {
+        this.username = username;
         this.postedDate = postedDate;
         this.message = message;
     }
@@ -36,12 +36,12 @@ public class Message {
         return id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public LocalDateTime getPostedDate() {

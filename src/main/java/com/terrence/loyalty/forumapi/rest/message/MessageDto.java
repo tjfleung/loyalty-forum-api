@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class MessageDto {
 
     private long id;
-    private String userName;
+    private String username;
     private String message;
     private LocalDateTime postedDate;
 
