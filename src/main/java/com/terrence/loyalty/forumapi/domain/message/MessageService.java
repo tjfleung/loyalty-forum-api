@@ -25,4 +25,9 @@ public class MessageService {
     public Message save(Message message) {
         return messageRepository.save(message);
     }
+
+    @Transactional(readOnly = true)
+    public Collection<Message> getMessagesByUsername(String username) {
+        return messageRepository.findMessagesByUsername(username);
+    }
 }

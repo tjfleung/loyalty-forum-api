@@ -42,4 +42,13 @@ public class MessageController {
         log.info("New message {}, From: {}", message.getMessage(), message.getUsername());
         return modelMapper.map(messageService.save(message), MessageDto.class);
     }
+
+    @CrossOrigin
+    @GetMapping("/{username}")
+    public List<MessageDto> getMessagesByUsername(@PathVariable String username) {
+
+        return messageService.getMessagesByUsername(username).stream()
+                .map(message -> modelMapper.map(message, MessageDto.class))
+                .collect(Collectors.toList());
+    }
 }
