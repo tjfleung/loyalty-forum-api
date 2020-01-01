@@ -9,6 +9,6 @@ import java.util.Set;
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-    @Query("SELECT m FROM Message m where m.username = :username")
+    @Query("SELECT m FROM Message m where m.username = :username order by m.postedDate desc")
     Set<Message> findMessagesByUsername(String username);
 }
