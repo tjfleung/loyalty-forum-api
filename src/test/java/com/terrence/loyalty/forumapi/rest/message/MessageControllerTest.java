@@ -1,6 +1,5 @@
 package com.terrence.loyalty.forumapi.rest.message;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.terrence.loyalty.forumapi.domain.message.Message;
 import com.terrence.loyalty.forumapi.domain.message.MessageService;
 import org.junit.Before;

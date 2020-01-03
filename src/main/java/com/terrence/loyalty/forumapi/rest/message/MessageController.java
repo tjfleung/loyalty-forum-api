@@ -5,6 +5,7 @@ import com.terrence.loyalty.forumapi.domain.message.MessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/messages")
 @Slf4j
+@CrossOrigin("*")
 public class MessageController {
 
     @Autowired
@@ -29,8 +31,8 @@ public class MessageController {
         this.modelMapper = modelMapper;
     }
 
-    @CrossOrigin
     @GetMapping
+    @Transactional(readOnly = true)
     public List<MessageDto> getMessages() {
         return messageService.getAllMessages().stream()
                 .map(message -> modelMapper.map(message, MessageDto.class))
@@ -38,8 +40,8 @@ public class MessageController {
                 .collect(Collectors.toList());
     }
 
-    @CrossOrigin
     @PostMapping
+    @Transactional
     public MessageDto postMessage(@RequestBody MessageDto messageDto) {
         if (messageDto.getUsername().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No username provided");
@@ -53,8 +55,8 @@ public class MessageController {
         return modelMapper.map(messageService.save(message), MessageDto.class);
     }
 
-    @CrossOrigin
     @GetMapping("/{username}")
+    @Transactional(readOnly = true)
     public List<MessageDto> getMessagesByUsername(@PathVariable String username) {
         log.info("Getting messages for username: {}", username);
         return messageService.getMessagesByUsername(username).stream()
