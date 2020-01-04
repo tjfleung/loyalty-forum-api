@@ -1,4 +1,4 @@
-package com.terrence.loyalty.forumapi.rest.message;
+package com.terrence.loyalty.forumapi.domain.message;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,5 +15,11 @@ public class MessageDto {
     private LocalDateTime postedDate;
 
     public MessageDto() {}
+
+    public MessageDto(String username, LocalDateTime postedDate, String message) {
+        this.username = username;
+        this.message = message;
+        this.postedDate = postedDate;
+    }
 
 }

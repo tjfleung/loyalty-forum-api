@@ -1,29 +1,56 @@
 package com.terrence.loyalty.forumapi.domain.message;
 
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collection;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class MessageService {
 
     @Autowired
     private final MessageRepository messageRepository;
 
-    public MessageService(MessageRepository messageRepository) {
+    @Autowired
+    private final ModelMapper modelMapper;
+
+    public MessageService(MessageRepository messageRepository, ModelMapper modelMapper) {
         this.messageRepository = messageRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public Collection<Message> getAllMessages() {
-        return messageRepository.findAll();
+    public List<MessageDto> getAllMessages() {
+        return messageRepository.findAll(Sort.by(Sort.Direction.DESC, "postedDate"))
+                .stream()
+                .map(message -> modelMapper.map(message, MessageDto.class))
+                .collect(Collectors.toList());
     }
 
-    public Message save(Message message) {
-        return messageRepository.save(message);
+    public MessageDto save(MessageDto messageDto) {
+        if (messageDto.getUsername() == null || messageDto.getUsername().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No username provided");
+        }
+        if (messageDto.getMessage() == null || messageDto.getMessage().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No message to post");
+        }
+
+        Message savedMessage = messageRepository.save(new Message(messageDto.getUsername(), LocalDateTime.now(), messageDto.getMessage()));
+        log.info("Saved new message: {}, From: {}", savedMessage.getMessage(), savedMessage.getUsername());
+        return modelMapper.map(savedMessage, MessageDto.class);
     }
 
-    public Collection<Message> getMessagesByUsername(String username) {
-        return messageRepository.findAllByUsernameOrderByPostedDateDesc(username);
+    public List<MessageDto> getMessagesByUsername(String username) {
+        return messageRepository.findAllByUsernameOrderByPostedDateDesc(username)
+                .stream()
+                .map(message -> modelMapper.map(message, MessageDto.class))
+                .collect(Collectors.toList());
     }
 }

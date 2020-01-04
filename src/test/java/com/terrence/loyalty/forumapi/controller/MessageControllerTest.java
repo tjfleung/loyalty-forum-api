@@ -1,6 +1,6 @@
-package com.terrence.loyalty.forumapi.rest.message;
+package com.terrence.loyalty.forumapi.controller;
 
-import com.terrence.loyalty.forumapi.domain.message.Message;
+import com.terrence.loyalty.forumapi.domain.message.MessageDto;
 import com.terrence.loyalty.forumapi.domain.message.MessageService;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,27 +38,27 @@ public class MessageControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private List<Message> messages;
+    private List<MessageDto> messageDtoList;
 
     @Before
-    public void setUp() throws Exception {
-        messages = Arrays.asList(
-                new Message("Terrence", LocalDateTime.of(2019, 12, 25, 13, 33, 21), "Happy Holidays!"),
-                new Message("Terrence", LocalDateTime.of(2020, 1, 1, 0, 0, 3), "Happy New Year!")
+    public void setUp() {
+        messageDtoList = Arrays.asList(
+                new MessageDto("Terrence", LocalDateTime.of(2019, 12, 25, 13, 33, 21), "Happy Holidays!"),
+                new MessageDto("Terrence", LocalDateTime.of(2020, 1, 1, 0, 0, 3), "Happy New Year!")
         );
     }
 
     @Test
     public void testGetAllMessages() throws Exception {
-        when(messageService.getAllMessages()).thenReturn(messages);
+        when(messageService.getAllMessages()).thenReturn(messageDtoList);
         mockMvc.perform(get("/messages")).andExpect(status().isOk());
     }
 
     @Test
     public void testPostMessage() throws Exception {
-        Message message = new Message("Test", LocalDateTime.of(2019, 12, 29, 20, 9, 22), "Testing");
+        MessageDto messageDto = new MessageDto("Test", LocalDateTime.of(2019, 12, 29, 20, 9, 22), "Testing");
 
-        when(messageService.save(Mockito.any(Message.class))).thenReturn(message);
+        when(messageService.save(Mockito.any(MessageDto.class))).thenReturn(messageDto);
 
         mockMvc.perform(post("/messages")
                 .content("{ \"userName\": \"Test\", \"message\": \"Testing\" }")
