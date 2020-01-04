@@ -2,6 +2,31 @@
 
 Backend webservice for custom forum application
 
+# Setup
+
+This backend app is developed using Spring Boot.
+Maven and at least Java 1.8 are required.
+
+## Building the app
+
+Run: 
+
+```mvn clean package```
+
+## Running the app
+
+After building the app, navigate to the *target* directory and run:
+
+```java -jar forum-api-0.0.1-SNAPSHOT.jar```
+
+Alternatively, use the provided run.sh script:
+
+(Note: may need to add execute privileges to the script: ```chmod +x run.sh```)
+
+```./run.sh```
+
+# Challenges
+
 ## Step 1: Hello world wide web
 Create a ‘hello world’ web page that runs on a local application server.
 Helpful tutorials are available here: http://www.w3schools.com/
