@@ -25,12 +25,14 @@ public class MessageController {
     @GetMapping
     @Transactional(readOnly = true)
     public List<MessageDto> getAllMessages() {
+        log.info("Getting all messages");
         return messageService.getAllMessages();
     }
 
     @PostMapping
     @Transactional
     public MessageDto postMessage(@RequestBody MessageDto messageDto) {
+        log.info("Posting new message");
         return messageService.save(messageDto);
     }
 

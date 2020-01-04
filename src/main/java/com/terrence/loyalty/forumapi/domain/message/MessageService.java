@@ -1,12 +1,12 @@
 package com.terrence.loyalty.forumapi.domain.message;
 
+import com.terrence.loyalty.forumapi.exception.ForumException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,12 +34,12 @@ public class MessageService {
                 .collect(Collectors.toList());
     }
 
-    public MessageDto save(MessageDto messageDto) {
+    public MessageDto save(MessageDto messageDto) throws ForumException {
         if (messageDto.getUsername() == null || messageDto.getUsername().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No username provided");
+            throw new ForumException(HttpStatus.BAD_REQUEST, "No username provided");
         }
         if (messageDto.getMessage() == null || messageDto.getMessage().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No message to post");
+            throw new ForumException(HttpStatus.BAD_REQUEST, "No message to post");
         }
 
         Message savedMessage = messageRepository.save(new Message(messageDto.getUsername(), LocalDateTime.now(), messageDto.getMessage()));
