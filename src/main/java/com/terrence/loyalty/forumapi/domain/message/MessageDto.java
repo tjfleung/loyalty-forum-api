@@ -11,14 +11,14 @@ public class MessageDto {
 
     private long id;
     private String username;
-    private String message;
+    private String comment;
     private LocalDateTime postedDate;
 
     public MessageDto() {}
 
-    public MessageDto(String username, LocalDateTime postedDate, String message) {
+    public MessageDto(String username, LocalDateTime postedDate, String comment) {
         this.username = username;
-        this.message = message;
+        this.comment = comment;
         this.postedDate = postedDate;
     }
 

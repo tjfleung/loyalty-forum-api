@@ -22,14 +22,14 @@ public class Message {
     private LocalDateTime postedDate;
 
     @NotNull
-    private String message;
+    private String comment;
 
     protected Message() {}
 
-    public Message(@NotNull String username, @NotNull LocalDateTime postedDate, @NotNull String message) {
+    public Message(@NotNull String username, @NotNull LocalDateTime postedDate, @NotNull String comment) {
         this.username = username;
         this.postedDate = postedDate;
-        this.message = message;
+        this.comment = comment;
     }
 
     public long getId() {
@@ -52,12 +52,12 @@ public class Message {
         this.postedDate = postedDate;
     }
 
-    public String getMessage() {
-        return message;
+    public String getComment() {
+        return comment;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setComment(String message) {
+        this.comment = message;
     }
 
 }

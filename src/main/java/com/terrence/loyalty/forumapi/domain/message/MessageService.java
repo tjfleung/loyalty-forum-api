@@ -38,12 +38,12 @@ public class MessageService {
         if (messageDto.getUsername() == null || messageDto.getUsername().isEmpty()) {
             throw new ForumException(HttpStatus.BAD_REQUEST, "No username provided");
         }
-        if (messageDto.getMessage() == null || messageDto.getMessage().isEmpty()) {
+        if (messageDto.getComment() == null || messageDto.getComment().isEmpty()) {
             throw new ForumException(HttpStatus.BAD_REQUEST, "No message to post");
         }
 
-        Message savedMessage = messageRepository.save(new Message(messageDto.getUsername(), LocalDateTime.now(), messageDto.getMessage()));
-        log.info("Saved new message: {}, From: {}", savedMessage.getMessage(), savedMessage.getUsername());
+        Message savedMessage = messageRepository.save(new Message(messageDto.getUsername(), LocalDateTime.now(), messageDto.getComment()));
+        log.info("Saved new message: {}, From: {}", savedMessage.getComment(), savedMessage.getUsername());
         return modelMapper.map(savedMessage, MessageDto.class);
     }
 
