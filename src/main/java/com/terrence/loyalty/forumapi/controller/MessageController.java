@@ -42,4 +42,11 @@ public class MessageController {
         log.info("Getting messages for username: {}", username);
         return messageService.getMessagesByUsername(username);
     }
+
+    @PostMapping("/{id}")
+    @Transactional
+    public MessageDto postReply(@PathVariable long id, @RequestBody MessageDto messageDto) {
+        log.info("Posting new reply");
+        return messageService.saveReply(messageDto, id);
+    }
 }

@@ -24,12 +24,21 @@ public class Message {
     @NotNull
     private String comment;
 
+    private long parentId;
+
     protected Message() {}
 
     public Message(@NotNull String username, @NotNull LocalDateTime postedDate, @NotNull String comment) {
         this.username = username;
         this.postedDate = postedDate;
         this.comment = comment;
+    }
+
+    public Message(@NotNull String username, @NotNull LocalDateTime postedDate, @NotNull String comment, long parentId) {
+        this.username = username;
+        this.postedDate = postedDate;
+        this.comment = comment;
+        this.parentId = parentId;
     }
 
     public long getId() {
@@ -60,4 +69,11 @@ public class Message {
         this.comment = message;
     }
 
+    public long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(long parentId) {
+        this.parentId = parentId;
+    }
 }

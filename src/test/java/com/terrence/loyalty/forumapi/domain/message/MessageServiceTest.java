@@ -103,4 +103,16 @@ public class MessageServiceTest {
             Assertions.assertEquals(400, e.getHttpStatus().value());
         }
     }
+
+    @Test
+    public void testSaveInvalidReply() {
+        MessageDto messageDto = new MessageDto(username, time, comment);
+
+        try {
+            service.saveReply(messageDto, -1);
+        } catch (ForumException e) {
+            Assertions.assertEquals(400, e.getHttpStatus().value());
+        }
+    }
+
 }

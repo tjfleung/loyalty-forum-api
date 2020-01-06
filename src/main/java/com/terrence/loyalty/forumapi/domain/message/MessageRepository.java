@@ -9,4 +9,8 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
     List<Message> findAllByUsernameOrderByPostedDateDesc(String username);
+
+    List<Message> findAllByUsernameAndParentIdOrderByPostedDateDesc(String username, long parentId);
+
+    List<Message> findAllByParentIdEqualsOrderByPostedDateDesc(long parentId);
 }
