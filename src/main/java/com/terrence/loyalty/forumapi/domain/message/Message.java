@@ -1,9 +1,8 @@
 package com.terrence.loyalty.forumapi.domain.message;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.terrence.loyalty.forumapi.domain.location.Location;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -26,6 +25,9 @@ public class Message {
 
     private long parentId;
 
+    @Embedded
+    private Location location;
+
     protected Message() {}
 
     public Message(@NotNull String username, @NotNull LocalDateTime postedDate, @NotNull String comment) {
@@ -39,6 +41,21 @@ public class Message {
         this.postedDate = postedDate;
         this.comment = comment;
         this.parentId = parentId;
+    }
+
+    public Message(@NotNull String username, @NotNull LocalDateTime postedDate, @NotNull String comment, Location location) {
+        this.username = username;
+        this.postedDate = postedDate;
+        this.comment = comment;
+        this.location = location;
+    }
+
+    public Message(@NotNull String username, @NotNull LocalDateTime postedDate, @NotNull String comment, long parentId, Location location) {
+        this.username = username;
+        this.postedDate = postedDate;
+        this.comment = comment;
+        this.parentId = parentId;
+        this.location = location;
     }
 
     public long getId() {
@@ -75,5 +92,13 @@ public class Message {
 
     public void setParentId(long parentId) {
         this.parentId = parentId;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

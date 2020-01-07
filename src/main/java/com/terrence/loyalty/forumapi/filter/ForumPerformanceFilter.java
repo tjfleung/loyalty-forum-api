@@ -5,6 +5,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
@@ -31,8 +32,9 @@ public class ForumPerformanceFilter implements Filter {
             Instant endTime = Instant.now();
             long durationInMs = Duration.between(startTime, endTime).toMillis();
 
-            log.info("Duration: {}ms", durationInMs);
-
+            if (request instanceof HttpServletRequest) {
+                log.info("Duration: {}ms. Uri: {}", durationInMs, ((HttpServletRequest) request).getRequestURI());
+            }
         }
 
         log.trace("Exiting performance filter");

@@ -1,5 +1,6 @@
 package com.terrence.loyalty.forumapi;
 
+import com.terrence.loyalty.forumapi.domain.location.Location;
 import com.terrence.loyalty.forumapi.domain.message.Message;
 import com.terrence.loyalty.forumapi.domain.message.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,11 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private void createMessages() {
+        Location location = new Location("Toronto", "43.65", "-79.38", "-1C");
         messageRepository.saveAll(Arrays.asList(
-                new Message("Terrence", LocalDateTime.of(2019, 12, 25, 13, 33, 21), "Happy Holidays!"),
-                new Message("Terrence", LocalDateTime.of(2020, 1, 1, 0, 0, 3), "Happy New Year!")
+                new Message("Terrence", LocalDateTime.of(2019, 12, 25, 13, 33, 21), "Happy Holidays!", location),
+                new Message("Terrence", LocalDateTime.of(2020, 1, 1, 0, 0, 3), "Happy New Year!", location),
+                new Message("Leung", LocalDateTime.of(2020, 1, 1, 6, 43, 20), "Happy New Year to you too!", 2, location)
         ));
     }
 }

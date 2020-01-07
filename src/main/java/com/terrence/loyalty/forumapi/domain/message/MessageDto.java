@@ -1,5 +1,6 @@
 package com.terrence.loyalty.forumapi.domain.message;
 
+import com.terrence.loyalty.forumapi.domain.location.Location;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ public class MessageDto {
     private String comment;
     private LocalDateTime postedDate;
     private long parentId;
+    private Location location;
     private List<MessageDto> childMessages = new ArrayList<>();
 
     public MessageDto() {}
@@ -39,6 +41,15 @@ public class MessageDto {
         this.postedDate = postedDate;
         this.parentId = parentId;
         this.childMessages = childMessages;
+    }
+
+    public MessageDto(String username, LocalDateTime postedDate, String comment, long parentId, List<MessageDto> childMessages, Location location) {
+        this.username = username;
+        this.comment = comment;
+        this.postedDate = postedDate;
+        this.parentId = parentId;
+        this.childMessages = childMessages;
+        this.location = location;
     }
 
     public void addChildMessage(MessageDto childMessage) {
