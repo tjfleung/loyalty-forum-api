@@ -56,12 +56,12 @@ public class MessageService {
             throw new ForumException(HttpStatus.BAD_REQUEST, "No comment to post");
         }
 
-        Location location = null;
+        Location location = new Location();
         if (messageDto.getLocation() != null) {
             location = locationService.getLocation(messageDto.getLocation().getLocation());
         }
 
-        Message savedMessage = messageRepository.save(new Message(messageDto.getUsername(), LocalDateTime.now(), messageDto.getComment(), location));
+        Message savedMessage = messageRepository.save(new Message(messageDto.getUsername(), LocalDateTime.now(), messageDto.getComment(), location, messageDto.getParentId()));
         log.info("Saved new message: {}, From: {}", savedMessage.getComment(), savedMessage.getUsername());
         return messageAdapter.adapt(savedMessage);
     }
@@ -77,21 +77,11 @@ public class MessageService {
         if (parentId <= 0) {
             throw new ForumException(HttpStatus.BAD_REQUEST, "Invalid comment to reply");
         }
-        if (messageDto.getUsername() == null || messageDto.getUsername().isEmpty()) {
-            throw new ForumException(HttpStatus.BAD_REQUEST, "No username provided");
-        }
-        if (messageDto.getComment() == null || messageDto.getComment().isEmpty()) {
-            throw new ForumException(HttpStatus.BAD_REQUEST, "No comment to post");
-        }
 
-        Location location = null;
-        if (messageDto.getLocation() != null && !messageDto.getLocation().getLocation().isEmpty()) {
-            location = locationService.getLocation(messageDto.getLocation().getLocation());
-        }
-
-        Message reply = messageRepository.save(new Message(messageDto.getUsername(), LocalDateTime.now(), messageDto.getComment(), parentId, location));
+        messageDto.setParentId(parentId);
+        MessageDto reply = save(messageDto);
         log.info("Saved new reply: {}, from {}, replying to Message {}", reply.getComment(), reply.getUsername(), reply.getParentId());
-        return messageAdapter.adapt(reply);
+        return reply;
     }
 
     private List<MessageDto> findChildMessages(long parentId) {

@@ -28,30 +28,6 @@ public class MessageDto {
         this.postedDate = postedDate;
     }
 
-    public MessageDto(String username, LocalDateTime postedDate, String comment, long parentId) {
-        this.username = username;
-        this.comment = comment;
-        this.postedDate = postedDate;
-        this.parentId = parentId;
-    }
-
-    public MessageDto(String username, LocalDateTime postedDate, String comment, long parentId, List<MessageDto> childMessages) {
-        this.username = username;
-        this.comment = comment;
-        this.postedDate = postedDate;
-        this.parentId = parentId;
-        this.childMessages = childMessages;
-    }
-
-    public MessageDto(String username, LocalDateTime postedDate, String comment, long parentId, List<MessageDto> childMessages, Location location) {
-        this.username = username;
-        this.comment = comment;
-        this.postedDate = postedDate;
-        this.parentId = parentId;
-        this.childMessages = childMessages;
-        this.location = location;
-    }
-
     public void addChildMessage(MessageDto childMessage) {
         this.childMessages.add(childMessage);
     }

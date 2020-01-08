@@ -36,10 +36,11 @@ public class Message {
         this.comment = comment;
     }
 
-    public Message(@NotNull String username, @NotNull LocalDateTime postedDate, @NotNull String comment, long parentId) {
+    public Message(@NotNull String username, @NotNull LocalDateTime postedDate, @NotNull String comment, Location location, long parentId) {
         this.username = username;
         this.postedDate = postedDate;
         this.comment = comment;
+        this.location = location;
         this.parentId = parentId;
     }
 
