@@ -1,6 +1,7 @@
 package com.terrence.loyalty.forumapi.domain.accuweather;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class City {
+    @JsonProperty("Key")
     private String key;
+    @JsonProperty("GeoPosition")
     private GeoPosition geoPosition;
 }
