@@ -33,7 +33,7 @@ public class ForumPerformanceFilter implements Filter {
             long durationInMs = Duration.between(startTime, endTime).toMillis();
 
             if (request instanceof HttpServletRequest) {
-                log.info("Duration: {}ms. Uri: {}", durationInMs, ((HttpServletRequest) request).getRequestURI());
+                log.info("Duration: {}ms. Method: {} Uri: {}", durationInMs, ((HttpServletRequest) request).getMethod(), ((HttpServletRequest) request).getRequestURI());
             }
         }
 

@@ -22,6 +22,8 @@ public class LocationService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    private final static String CELSIUS = "C";
+
     /**
      * API key: xamdlbTIESc68OO6GCrG8JGt6OeHyWcP. 50 calls per day at free tier.
      * Design:
@@ -47,6 +49,12 @@ public class LocationService {
 
         Forecast forecast = getForecast(cityKey);
         if (forecast != null) {
+            // AccuWeather responds with temperature values in fahrenheit, convert to celsius
+            if (forecast.getTemperature().getUnit().equals("F")) {
+                double celsiusValue = fahrenheitToCelsius(forecast.getTemperature().getValue());
+                forecast.getTemperature().setValue(celsiusValue);
+                forecast.getTemperature().setUnit(CELSIUS);
+            }
             location.setTemperature(forecast.getTemperature().getValue() + forecast.getTemperature().getUnit());
         } else {
             location.setTemperature("-");
@@ -118,6 +126,10 @@ public class LocationService {
         }
 
         return null;
+    }
+
+    public double fahrenheitToCelsius(double fahrenheit) {
+        return (double) Math.round((fahrenheit - 32) * (5.0/9.0));
     }
 
 }
